@@ -23,6 +23,11 @@ import io.uscool.quizapp.models.Avatars;
 
 /**
  * Created by ujjawal on 7/6/17.
+ * <p/>
+ * A dialog fragment that allows user to select avatar from predefined set of images
+ * <p/>
+ * Documentation (Dialogs): http://developer.android.com/guide/topics/ui/dialogs.html
+ * Documentation (GridView): http://developer.android.com/guide/topics/ui/layout/gridview.html
  */
 
 public class AvatarPickerDialogFragment extends DialogFragment implements AdapterView.OnItemClickListener{

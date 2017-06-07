@@ -2,7 +2,14 @@
     <string name="app_name">QuizApp</string>
 
     <string name="message_select_avatar">Choose Your Avatar</string>
+    <string name="message_welcome">Welcome To QuizApp</string>
+    <string name="message_welcome_subheader">create a profile to save your progress</string>
+
 
     <string name="action_select">Select</string>
     <string name="action_cancel">Cancel</string>
+
+    <string name="username">Username</string>
+    <string name="empty_username">Username can\'t be empty</string>
+    <string name="too_long_username">Username is too long</string>
 </resources>
