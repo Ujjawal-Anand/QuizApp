@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">QuizApp</string>
+
+    <string name="message_select_avatar">Choose Your Avatar</string>
+
+    <string name="action_select">Select</string>
+    <string name="action_cancel">Cancel</string>
 </resources>
