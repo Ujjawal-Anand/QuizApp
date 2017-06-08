@@ -19,7 +19,8 @@
         </activity>
         <activity
             android:name=".activities.ShowSubjectActivity"
-            android:label="@string/title_activity_show_subject"/>
+            android:label="@string/title_activity_show_subject" />
+        <activity android:name=".activities.ShowChapterActivity"></activity>
     </application>
 
 </manifest>
