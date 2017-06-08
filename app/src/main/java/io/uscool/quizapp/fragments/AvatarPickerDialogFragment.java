@@ -3,6 +3,7 @@ package io.uscool.quizapp.fragments;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -45,7 +46,7 @@ public class AvatarPickerDialogFragment extends DialogFragment implements Adapte
      * This method stores the listener when the activity is attached
      */
     @Override
-    public void onAttach(Activity context) {
+    public void onAttach(Context context) {
         super.onAttach(context);
         // verify that host activity implements the callback interface
         try {
