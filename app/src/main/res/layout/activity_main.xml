@@ -22,7 +22,6 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         app:layout_constraintBottom_toBottomOf="@id/avatar_image"
         app:layout_constraintLeft_toLeftOf="@id/avatar_image"
-        app:layout_constraintRight_toRightOf="@id/avatar_image"
-        />
+        app:layout_constraintRight_toRightOf="@id/avatar_image" />
 
 </android.support.constraint.ConstraintLayout>
