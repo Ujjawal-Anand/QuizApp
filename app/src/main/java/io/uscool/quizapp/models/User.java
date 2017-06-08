@@ -14,6 +14,8 @@ public class User {
      * @param mUsername username of the user
      * @param mAvatar name of avatar
     * */
+
+    public User() {}
     public User(String mUsername, String mAvatar) {
         this.username = mUsername;
         this.avatar = mAvatar;

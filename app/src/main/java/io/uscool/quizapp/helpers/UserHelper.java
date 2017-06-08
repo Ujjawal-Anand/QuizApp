@@ -44,9 +44,9 @@ public class UserHelper {
      */
     public static User getPlayer(Context context) {
         SharedPreferences preferences = getSharedPreferences(context);
-        final String firstName = preferences.getString(PREFERENCE_USERNAME, null);
+        final String username = preferences.getString(PREFERENCE_USERNAME, null);
         final String avatar = preferences.getString(PREFERENCE_AVATAR, null);
-        return new User(firstName, avatar);
+        return new User(username, avatar);
     }
 
     /**
