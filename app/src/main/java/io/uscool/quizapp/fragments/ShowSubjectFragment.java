@@ -2,6 +2,7 @@ package io.uscool.quizapp.fragments;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -76,6 +77,7 @@ public class ShowSubjectFragment extends Fragment {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mActivity, 2);
         mRecycleView.setLayoutManager(gridLayoutManager);
         mRecycleView.setAdapter(subjectAdapter);
+        setOnclickListener(subjectAdapter, subjectList);
     }
 
     private void loadData(List<Subject> subjectList) {
@@ -84,14 +86,24 @@ public class ShowSubjectFragment extends Fragment {
         for(Subject subject:subjectList) {
             String iconName = subject.getName().toLowerCase();
             String colorName = subject.getName().toLowerCase()+ "_underline";
-            int icon = getResource(iconName,"mipmap", resources, packageName);
-            int color = getResource(colorName, "color", resources, packageName);
+            int icon = getResourceByName(iconName,"mipmap", resources, packageName);
+            int color = getResourceByName(colorName, "color", resources, packageName);
             subject.setIcon_id(icon);
             subject.setUnderline_color_id(color);
         }
     }
 
-    private int getResource(String name, String identifier, Resources resources, String packageName) {
+    private int getResourceByName(String name, String identifier, Resources resources, String packageName) {
        return resources.getIdentifier(name, identifier, packageName);
+    }
+
+    private void setOnclickListener(final SubjectAdapter subjectAdapter, final List<Subject> subjectList) {
+      subjectAdapter.setOnItemClickListener(new SubjectAdapter.OnItemClickListener() {
+          @Override
+          public void onClick(View view, int position) {
+//              Intent intent = new Intent(mActivity, ShowChaptersActivity.class);
+//              intent.putExtra("subject_id", subjectList.get(position).getId());
+          }
+      });
     }
 }

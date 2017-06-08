@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,6 +21,11 @@ import io.uscool.quizapp.models.Subject;
 public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.ViewHolder> {
     private List<Subject> mSubjectList;
     private Context mContext;
+    private OnItemClickListener mOnItemClickListener;
+
+    public interface OnItemClickListener {
+       void onClick(View view, int position);
+    }
 
     public SubjectAdapter(List<Subject> list, Context context) {
         this.mContext = context;
@@ -44,6 +50,10 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.ViewHold
     @Override
     public int getItemCount() {
         return mSubjectList.size();
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
