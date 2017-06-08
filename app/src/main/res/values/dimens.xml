@@ -5,4 +5,8 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="activity_horizontal_margin">64dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="elevation_header">4dp</dimen>
+    <dimen name="avatar_image">64dp</dimen>
+    <dimen name="spacing_double">16dp</dimen>
+    <dimen name="size_avatar_toolbar">40dp</dimen>
 </resources>

@@ -1,7 +1,35 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment"
-    android:name="io.uscool.quizapp.activities.ShowSubjectActivityFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:layout="@layout/fragment_show_subject" />
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:id="@+id/toolbar"
+        android:background="@color/colorPrimary"
+        android:elevation="@dimen/elevation_header"
+        tools:ignore="UnusedAttribute">
+
+        <ImageView
+            android:layout_width="@dimen/size_avatar_toolbar"
+            android:layout_height="@dimen/size_avatar_toolbar"
+            android:layout_marginEnd="@dimen/spacing_double"
+            android:layout_marginRight="@dimen/spacing_double"
+            android:id="@+id/avatar_image"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/title"
+            />
+    </android.support.v7.widget.Toolbar>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/subject_container"
+        tools:context=".activities.ShowSubjectActivity"/>
+
+</LinearLayout>
