@@ -23,6 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/title"
+            style="@style/Quiz.TextAppearance.Title"
             />
     </android.support.v7.widget.Toolbar>
 

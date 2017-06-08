@@ -37,6 +37,15 @@ public class SignInActivity extends AppCompatActivity implements SignInFragment.
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        if(UserHelper.isSignedIn(this)) {
+            startActivity(new Intent(getApplicationContext(), ShowSubjectActivity.class));
+            finish();
+        }
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
         if (UserHelper.isSignedIn(this)) {
@@ -77,11 +86,9 @@ public class SignInActivity extends AppCompatActivity implements SignInFragment.
 //        mAvatarImageView.setImageResource(Avatars.getAvatarResourceId(mActivity.getApplicationContext(), avatarResourceName));
         User user = new User(username, avatarResourceName);
         UserHelper.writeToPreferences(getApplicationContext(), user);
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        startActivity(new Intent(getApplicationContext(), ShowSubjectActivity.class));
         finish();
     }
-
-
 
 
 }

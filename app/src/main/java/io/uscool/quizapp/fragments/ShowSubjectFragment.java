@@ -1,13 +1,23 @@
 package io.uscool.quizapp.fragments;
 
 
+import android.app.Activity;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import io.uscool.quizapp.R;
+import io.uscool.quizapp.adapters.SubjectAdapter;
+import io.uscool.quizapp.database.QuizDatabaseHelper;
+import io.uscool.quizapp.models.Subject;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -15,15 +25,11 @@ import io.uscool.quizapp.R;
  * create an instance of this fragment.
  */
 public class ShowSubjectFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private final static String MIPMAP = "mipmap";
 
+    private RecyclerView mRecycleView;
+    private Activity mActivity;
 
     public ShowSubjectFragment() {
         // Required empty public constructor
@@ -33,27 +39,19 @@ public class ShowSubjectFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment ShowSubjectFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ShowSubjectFragment newInstance(String param1, String param2) {
+    public static ShowSubjectFragment newInstance() {
         ShowSubjectFragment fragment = new ShowSubjectFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+//        Bundle args = new Bundle();
+//        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -63,4 +61,37 @@ public class ShowSubjectFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_show_subject, container, false);
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mActivity = getActivity();
+        mRecycleView = (RecyclerView) view.findViewById(R.id.fragment_recycler_view);
+        setRecyclerSubjectView();
+    }
+
+    private void setRecyclerSubjectView() {
+        List<Subject> subjectList = QuizDatabaseHelper.getSubjects(getContext());
+        loadData(subjectList);
+        SubjectAdapter subjectAdapter = new SubjectAdapter(subjectList, getContext());
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(mActivity, 2);
+        mRecycleView.setLayoutManager(gridLayoutManager);
+        mRecycleView.setAdapter(subjectAdapter);
+    }
+
+    private void loadData(List<Subject> subjectList) {
+        Resources resources = mActivity.getResources();
+        String packageName = mActivity.getPackageName();
+        for(Subject subject:subjectList) {
+            String iconName = subject.getName().toLowerCase();
+            String colorName = subject.getName().toLowerCase()+ "_underline";
+            int icon = getResource(iconName,"mipmap", resources, packageName);
+            int color = getResource(colorName, "colors", resources, packageName);
+            subject.setIcon_id(icon);
+            subject.setUnderline_color_id(color);
+        }
+    }
+
+    private int getResource(String name, String identifier, Resources resources, String packageName) {
+       return resources.getIdentifier(name, identifier, packageName);
+    }
 }

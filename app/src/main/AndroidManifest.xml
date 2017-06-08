@@ -19,13 +19,7 @@
         </activity>
         <activity
             android:name=".activities.ShowSubjectActivity"
-            android:label="@string/title_activity_show_subject">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:label="@string/title_activity_show_subject"/>
     </application>
 
 </manifest>
