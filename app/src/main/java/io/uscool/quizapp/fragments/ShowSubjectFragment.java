@@ -85,7 +85,7 @@ public class ShowSubjectFragment extends Fragment {
             String iconName = subject.getName().toLowerCase();
             String colorName = subject.getName().toLowerCase()+ "_underline";
             int icon = getResource(iconName,"mipmap", resources, packageName);
-            int color = getResource(colorName, "colors", resources, packageName);
+            int color = getResource(colorName, "color", resources, packageName);
             subject.setIcon_id(icon);
             subject.setUnderline_color_id(color);
         }
