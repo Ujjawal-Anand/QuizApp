@@ -39,11 +39,17 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         Subject subject = mSubjectList.get(position);
         holder.subjectName.setText(subject.getName());
         holder.subjectIcon.setImageResource(subject.getIcon_id());
         holder.underline.setBackgroundResource(subject.getUnderline_color_id());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mOnItemClickListener.onClick(view, holder.getAdapterPosition());
+            }
+        });
 
     }
 

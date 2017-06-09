@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import io.uscool.quizapp.R;
+import io.uscool.quizapp.activities.ShowChapterActivity;
 import io.uscool.quizapp.adapters.SubjectAdapter;
 import io.uscool.quizapp.database.QuizDatabaseHelper;
 import io.uscool.quizapp.models.Subject;
@@ -74,10 +75,10 @@ public class ShowSubjectFragment extends Fragment {
         List<Subject> subjectList = QuizDatabaseHelper.getSubjects(getContext());
         loadData(subjectList);
         SubjectAdapter subjectAdapter = new SubjectAdapter(subjectList, getContext());
+        setOnclickListener(subjectAdapter, subjectList);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mActivity, 2);
         mRecycleView.setLayoutManager(gridLayoutManager);
         mRecycleView.setAdapter(subjectAdapter);
-        setOnclickListener(subjectAdapter, subjectList);
     }
 
     private void loadData(List<Subject> subjectList) {
@@ -101,7 +102,8 @@ public class ShowSubjectFragment extends Fragment {
       subjectAdapter.setOnItemClickListener(new SubjectAdapter.OnItemClickListener() {
           @Override
           public void onClick(View view, int position) {
-//              Intent intent = new Intent(mActivity, ShowChaptersActivity.class);
+              Intent intent = new Intent(mActivity, ShowChapterActivity.class);
+              startActivity(intent);
 //              intent.putExtra("subject_id", subjectList.get(position).getId());
           }
       });
