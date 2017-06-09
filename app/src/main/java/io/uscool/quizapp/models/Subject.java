@@ -1,10 +1,12 @@
 package io.uscool.quizapp.models;
 
+import java.io.Serializable;
+
 /**
  * Created by ujjawal on 8/6/17.
  */
 
-public class Subject {
+public class Subject implements Serializable{
     private String name;
     private String id;
     private String subjectIcon;

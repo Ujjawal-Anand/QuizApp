@@ -28,7 +28,7 @@ public class ShowSubjectActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_subject);
+        setContentView(R.layout.activity_show_content);
 
         mUser = UserHelper.getPlayer(getApplicationContext());
         initToolbar();

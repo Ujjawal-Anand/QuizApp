@@ -60,7 +60,7 @@ public class ShowSubjectFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_show_subject, container, false);
+        return inflater.inflate(R.layout.fragment_recycler, container, false);
     }
 
     @Override
@@ -103,8 +103,9 @@ public class ShowSubjectFragment extends Fragment {
           @Override
           public void onClick(View view, int position) {
               Intent intent = new Intent(mActivity, ShowChapterActivity.class);
+              intent.putExtra("subject", subjectList.get(position));
               startActivity(intent);
-//              intent.putExtra("subject_id", subjectList.get(position).getId());
+
           }
       });
     }
