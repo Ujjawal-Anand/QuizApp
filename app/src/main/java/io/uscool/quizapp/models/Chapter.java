@@ -7,18 +7,13 @@ package io.uscool.quizapp.models;
 public class Chapter {
     private String id;
     private String name;
-    private int seq;
+
 
     public Chapter() {}
 
-    public Chapter(String id, String name, int seq) {
+    public Chapter(String id, String name) {
         this.id = id;
         this.name = name;
-        this.seq = seq;
-    }
-
-    public int getSeq() {
-        return seq;
     }
 
     public String getId() {

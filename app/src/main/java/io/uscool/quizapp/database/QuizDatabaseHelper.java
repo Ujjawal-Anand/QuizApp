@@ -9,6 +9,7 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.uscool.quizapp.models.Chapter;
 import io.uscool.quizapp.models.Subject;
 
 /**
@@ -21,6 +22,7 @@ public class QuizDatabaseHelper extends SQLiteAssetHelper {
     private static  final int DATABASE_VERSION = 1;
 
     private static List<Subject> mSubjectList;
+    private static List<Chapter> mChapterList;
 
     private static QuizDatabaseHelper mInstance;
 
@@ -42,41 +44,67 @@ public class QuizDatabaseHelper extends SQLiteAssetHelper {
 
     public static List<Subject> getSubjects(Context context) {
         if(mSubjectList == null) {
-            mSubjectList = loadSubjects(context);
+            final SQLiteDatabase readableDatabase = QuizDatabaseHelper.getReadableDatabase(context);
+            mSubjectList = loadSubjects(readableDatabase);
         }
         return mSubjectList;
     }
 
-    private static List<Subject> loadSubjects(Context context) {
-        Cursor data = QuizDatabaseHelper.getSubjectCusor(context);
-        List<Subject> tmpSubjectList = new ArrayList<>(data.getCount());
-        final SQLiteDatabase readableDatabase = QuizDatabaseHelper.getReadableDatabase(context);
-        do {
-            final Subject subject = getSubject(data, readableDatabase);
-            tmpSubjectList.add(subject);
-        } while (data.moveToNext());
+    public static List<Chapter> getChapters(Context context, String id) {
+        if(mChapterList == null) {
+            final SQLiteDatabase readableDatabase = QuizDatabaseHelper.getReadableDatabase(context);
+            mChapterList = loadChapters(readableDatabase, id);
+        }
+        return mChapterList;
+    }
+
+    private static List<Subject> loadSubjects(SQLiteDatabase database) {
+        final String TABLE_NAME = "subject";
+        final String [] TABLE_PROJECTION = {"id", "name"};
+        Cursor cursor = database.query(TABLE_NAME, TABLE_PROJECTION, null, null, null, null, null);
+        List<Subject> tmpSubjectList = new ArrayList<>(cursor.getCount());
+        if(cursor != null && cursor.moveToFirst()) {
+            cursor.moveToFirst();
+            do {
+                final Subject subject = getSubject(cursor);
+                tmpSubjectList.add(subject);
+            } while (cursor.moveToNext());
+        }
         return tmpSubjectList;
     }
 
-    private static Cursor getSubjectCusor(Context context) {
-        SQLiteDatabase readableDatabase = QuizDatabaseHelper.getReadableDatabase(context);
-        final String TABLE_NAME = "subject";
+    private static List<Chapter> loadChapters(SQLiteDatabase database, String id) {
+        final String TABLE_NAME = "chapter";
         final String [] TABLE_PROJECTION = {"id", "name"};
-        Cursor data = readableDatabase.query(TABLE_NAME, TABLE_PROJECTION, null, null, null, null, null);
-        data.moveToFirst();
-        return data;
+        final String WhereClause = "subject_id = ?";
+        final String [] WhereArgs  = {id};
+        final String OrderBy = "seq";
+
+        Cursor cursor = database.query(TABLE_NAME, TABLE_PROJECTION,
+                WhereClause, WhereArgs, null, null, OrderBy);
+        List<Chapter> tmpChapterList = new ArrayList<>(cursor.getCount());
+        if(cursor != null && cursor.moveToFirst()) {
+            cursor.moveToFirst();
+            do {
+                tmpChapterList.add(getChapterFromSubject(cursor));
+            } while(cursor.moveToNext());
+        }
+        return  tmpChapterList;
     }
 
-    private static Subject getSubject(Cursor data, SQLiteDatabase readableDatabase) {
+    private static Chapter getChapterFromSubject(Cursor cursor) {
+        String id = cursor.getString(0);
+        String name = cursor.getString(1);
+        return new Chapter(id, name);
+    }
+
+
+
+    private static Subject getSubject(Cursor data) {
         // magic number based on subject TABLE_PROJECTION
         final String id = data.getString(0);
         final String name = data.getString(1);
         return new Subject(id, name);
     }
-
-
-
-
-
 
 }
