@@ -18,7 +18,7 @@ import io.uscool.quizapp.models.Subject;
 
 public class QuizDatabaseHelper extends SQLiteAssetHelper {
 
-    private static final String DATABASE_NAME = "quiz_app.db";
+    private static final String DATABASE_NAME = "quiz.db";
     private static  final int DATABASE_VERSION = 1;
 
     private static List<Subject> mSubjectList;
@@ -77,11 +77,11 @@ public class QuizDatabaseHelper extends SQLiteAssetHelper {
         final String TABLE_NAME = "chapter";
         final String [] TABLE_PROJECTION = {"id", "name"};
         final String WhereClause = "subject_id = ?";
-        final String [] WhereArgs  = {id};
+        final String [] WhereArgs  = new String[] {id};
         final String OrderBy = "seq";
 
         Cursor cursor = database.query(TABLE_NAME, TABLE_PROJECTION,
-                WhereClause, WhereArgs, null, null, OrderBy);
+                WhereClause, WhereArgs, null, null, null);
         List<Chapter> tmpChapterList = new ArrayList<>(cursor.getCount());
         if(cursor != null && cursor.moveToFirst()) {
             cursor.moveToFirst();
@@ -93,8 +93,8 @@ public class QuizDatabaseHelper extends SQLiteAssetHelper {
     }
 
     private static Chapter getChapterFromSubject(Cursor cursor) {
-        String id = cursor.getString(0);
-        String name = cursor.getString(1);
+        final String id = cursor.getString(0);
+        final String name = cursor.getString(1);
         return new Chapter(id, name);
     }
 

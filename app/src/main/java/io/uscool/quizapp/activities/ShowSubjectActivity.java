@@ -75,6 +75,6 @@ public class ShowSubjectActivity extends AppCompatActivity {
 
     private void attachSubjectGridFragment() {
         FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction().replace(R.id.subject_container, ShowSubjectFragment.newInstance()).commit();
+        fm.beginTransaction().replace(R.id.fragment_container, ShowSubjectFragment.newInstance()).commit();
     }
 }

@@ -1,6 +1,7 @@
 package io.uscool.quizapp.activities;
 
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import io.uscool.quizapp.R;
+import io.uscool.quizapp.fragments.ShowChapterFragment;
 import io.uscool.quizapp.models.Subject;
 
 public class ShowChapterActivity extends AppCompatActivity {
@@ -25,6 +27,9 @@ public class ShowChapterActivity extends AppCompatActivity {
         mSubject = (Subject) intent.getSerializableExtra("subject");
 
         initToolbar();
+        if(savedInstanceState == null) {
+            attachChapterFragment();
+        }
     }
 
     private void initToolbar() {
@@ -35,6 +40,12 @@ public class ShowChapterActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         mSubjectIcon.setImageResource(mSubject.getIcon_id());
         mSubjectTilte.setText(mSubject.getName());
+    }
+
+    private void attachChapterFragment() {
+        FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction().replace(R.id.fragment_container,
+                ShowChapterFragment.newInstance(mSubject.getId())).commit();
     }
 
 
