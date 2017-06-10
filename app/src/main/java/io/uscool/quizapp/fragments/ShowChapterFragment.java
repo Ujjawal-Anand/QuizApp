@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.uscool.quizapp.R;
@@ -82,7 +83,7 @@ public class ShowChapterFragment extends Fragment {
 //        Chapter chapter = new Chapter("1", mSubjectId);
 //        List<Chapter> chapterList = new ArrayList<>();
 //        chapterList.add(chapter);
-        List<Chapter> chapterList = QuizDatabaseHelper.getChapters(getContext(), mSubjectId);
+        List<Chapter> chapterList = QuizDatabaseHelper.getChapters(getContext(), mSubjectId, true);
         ChapterAdapter chapterAdapter = new ChapterAdapter(chapterList, getContext());
         setOnclickListener(chapterAdapter, chapterList);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mActivity, 1);

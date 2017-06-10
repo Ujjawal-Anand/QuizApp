@@ -50,10 +50,10 @@ public class QuizDatabaseHelper extends SQLiteAssetHelper {
         return mSubjectList;
     }
 
-    public static List<Chapter> getChapters(Context context, String id) {
-        if(mChapterList == null) {
+    public static List<Chapter> getChapters(Context context, String subjectId, boolean fromDatabase) {
+        if(mChapterList == null || fromDatabase) {
             final SQLiteDatabase readableDatabase = QuizDatabaseHelper.getReadableDatabase(context);
-            mChapterList = loadChapters(readableDatabase, id);
+            mChapterList = loadChapters(readableDatabase, subjectId);
         }
         return mChapterList;
     }
@@ -69,25 +69,27 @@ public class QuizDatabaseHelper extends SQLiteAssetHelper {
                 final Subject subject = getSubject(cursor);
                 tmpSubjectList.add(subject);
             } while (cursor.moveToNext());
+            cursor.close();
         }
         return tmpSubjectList;
     }
 
-    private static List<Chapter> loadChapters(SQLiteDatabase database, String id) {
+    private static List<Chapter> loadChapters(SQLiteDatabase database, String subjectId) {
+        List<Chapter> tmpChapterList = new ArrayList<>();
         final String TABLE_NAME = "chapter";
         final String [] TABLE_PROJECTION = {"id", "name"};
         final String WhereClause = "subject_id = ?";
-        final String [] WhereArgs  = new String[] {id};
+        final String [] WhereArgs  = new String[] {subjectId};
         final String OrderBy = "seq";
 
         Cursor cursor = database.query(TABLE_NAME, TABLE_PROJECTION,
                 WhereClause, WhereArgs, null, null, null);
-        List<Chapter> tmpChapterList = new ArrayList<>(cursor.getCount());
         if(cursor != null && cursor.moveToFirst()) {
             cursor.moveToFirst();
             do {
                 tmpChapterList.add(getChapterFromSubject(cursor));
             } while(cursor.moveToNext());
+            cursor.close();
         }
         return  tmpChapterList;
     }
