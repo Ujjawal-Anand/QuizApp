@@ -1,6 +1,7 @@
 package io.uscool.quizapp.models.Quiz;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
 import java.util.ArrayList;
 
@@ -53,6 +54,10 @@ public abstract class QuizPage implements QuizPageTreeNode {
     public void flattenCurrentPageSequence(ArrayList<QuizPage> dest) {
         dest.add(this);
     }
+
+    public abstract Fragment createFragment();
+
+    public abstract void getReviewItem(ArrayList<ReviewItem> dest);
 
     public boolean isCompleted() {
         return true;
