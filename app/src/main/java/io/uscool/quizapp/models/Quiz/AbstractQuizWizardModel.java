@@ -1,4 +1,4 @@
-package io.uscool.quizapp.models;
+package io.uscool.quizapp.models.Quiz;
 
 /**
  * Created by ujjawal on 22/6/17.

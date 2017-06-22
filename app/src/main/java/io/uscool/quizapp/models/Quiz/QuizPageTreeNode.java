@@ -1,4 +1,4 @@
-package io.uscool.quizapp.models;
+package io.uscool.quizapp.models.Quiz;
 
 import java.util.ArrayList;
 
