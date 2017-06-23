@@ -32,6 +32,15 @@ public abstract class AbstractQuizWizardModel implements ModelCallbacks {
 
     }
 
+    @Override
+    public void onPageTreeChanged() {
+        // can't use for each because of concurrent modification (review fragment
+        // can get added or removed and will register itself as a listener)
+        for (int i = 0; i < mListeners.size(); i++) {
+            mListeners.get(i).onPageTreeChanged();
+        }
+    }
+
     public QuizPage findByKey(String key) {
         return mRootPageList.findBYKey(key);
     }

@@ -12,7 +12,7 @@ import java.util.Arrays;
 
 public class SingleCorrectChoiceQuiz extends QuizPage {
     private ArrayList<String> mChoiceList = new ArrayList<>();
-    private int mRightChoicePosition;
+    protected int mRightChoicePosition;
 
     public SingleCorrectChoiceQuiz(ModelCallbacks callbacks, String questionText) {
         super(callbacks, questionText);
@@ -51,7 +51,7 @@ public class SingleCorrectChoiceQuiz extends QuizPage {
         return this;
     }
 
-    public SingleCorrectChoiceQuiz setCorrectChoicePostion(int position) {
+    public SingleCorrectChoiceQuiz setChoiceMatchPosition(int position) {
         mRightChoicePosition = position;
         return this;
     }

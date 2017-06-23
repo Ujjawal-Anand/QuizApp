@@ -17,7 +17,7 @@ public abstract class QuizPage implements QuizPageTreeNode {
 
     protected Bundle mData = new Bundle();
     protected String mQuestionText;
-    protected boolean mResquired;
+    protected boolean mRequired;
     protected String mParentKey;
 
     protected QuizPage(ModelCallbacks callbacks, String questionText) {
@@ -34,7 +34,7 @@ public abstract class QuizPage implements QuizPageTreeNode {
     }
 
     public boolean isResquired() {
-        return mResquired;
+        return mRequired;
     }
 
     public void setParentKey(String parentKey) {
@@ -72,8 +72,8 @@ public abstract class QuizPage implements QuizPageTreeNode {
         notifyDataChanged();
     }
 
-    public QuizPage setResquired(boolean mResquired) {
-        this.mResquired = mResquired;
+    public QuizPage setRequired(boolean mRequired) {
+        this.mRequired = mRequired;
         return this;
     }
 }
