@@ -11,5 +11,9 @@
     <dimen name="size_avatar_toolbar">40dp</dimen>
     <dimen name="title_textsize">24sp</dimen>
     <dimen name="spacing_normal">8dp</dimen>
+    <dimen name="step_pager_tab_width">32dp</dimen>
+    <dimen name="step_pager_tab_height">3dp</dimen>
+    <dimen name="step_pager_tab_spacing">4dp</dimen>
+
 
 </resources>

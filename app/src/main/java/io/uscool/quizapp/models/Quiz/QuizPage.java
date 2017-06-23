@@ -33,7 +33,7 @@ public abstract class QuizPage implements QuizPageTreeNode {
         return mQuestionText;
     }
 
-    public boolean isResquired() {
+    public boolean isRequired() {
         return mRequired;
     }
 

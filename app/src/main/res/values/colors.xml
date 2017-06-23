@@ -11,4 +11,8 @@
 
     <color name="review_title">#ff0099cc</color>
 
+    <color name="step_pager_previous_tab_color">#4433b5e5</color>
+    <color name="step_pager_selected_tab_color">#ff0099cc</color>
+    <color name="step_pager_next_tab_color">#10000000</color>
+
 </resources>
