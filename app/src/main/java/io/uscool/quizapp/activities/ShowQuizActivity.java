@@ -20,6 +20,7 @@ import android.widget.Button;
 import java.util.List;
 
 import io.uscool.quizapp.R;
+import io.uscool.quizapp.adapters.QuizPagerAdapter;
 import io.uscool.quizapp.fragments.quiz.QuizFragmentCallbacks;
 import io.uscool.quizapp.fragments.quiz.ReviewFragment;
 import io.uscool.quizapp.models.Quiz.AbstractQuizWizardModel;
@@ -34,7 +35,7 @@ public class ShowQuizActivity extends AppCompatActivity implements
         ModelCallbacks {
 
     private ViewPager mPager;
-    private MyPagerAdapter mPagerAdapter;
+    private QuizPagerAdapter mPagerAdapter;
 
     private boolean mEditingAfterReview;
 
@@ -64,8 +65,8 @@ public class ShowQuizActivity extends AppCompatActivity implements
 
 
         mWizardModel.registerListener(this);
-
-        mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
+        mCurrentPageSequence = mWizardModel.getCurrentPageSequence();
+        mPagerAdapter = new QuizPagerAdapter(mCurrentPageSequence, getSupportFragmentManager());
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mPagerAdapter);
         mStepPagerStrip = (StepPagerStrip) findViewById(R.id.strip);
@@ -126,7 +127,7 @@ public class ShowQuizActivity extends AppCompatActivity implements
 
 
     public void onPageTreeChanged() {
-        mCurrentPageSequence = mWizardModel.getCurrentPageSequence();
+//        mCurrentPageSequence = mWizardModel.getCurrentPageSequence();
         recalculateCutOffPage();
         mStepPagerStrip.setPageCount(mCurrentPageSequence.size() + 1); // + 1 = review step
         mPagerAdapter.notifyDataSetChanged();
@@ -217,59 +218,7 @@ public class ShowQuizActivity extends AppCompatActivity implements
         return false;
     }
 
-    public class MyPagerAdapter extends FragmentStatePagerAdapter {
-        private int mCutOffPage;
-        private Fragment mPrimaryItem;
 
-        public MyPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int i) {
-            if (i >= mCurrentPageSequence.size()) {
-                return new ReviewFragment();
-            }
-
-            return mCurrentPageSequence.get(i).createFragment();
-        }
-
-        @Override
-        public int getItemPosition(Object object) {
-            // TODO: be smarter about this
-            if (object == mPrimaryItem) {
-                // Re-use the current fragment (its position never changes)
-                return POSITION_UNCHANGED;
-            }
-
-            return POSITION_NONE;
-        }
-
-        @Override
-        public void setPrimaryItem(ViewGroup container, int position, Object object) {
-            super.setPrimaryItem(container, position, object);
-            mPrimaryItem = (Fragment) object;
-        }
-
-        @Override
-        public int getCount() {
-            if (mCurrentPageSequence == null) {
-                return 0;
-            }
-            return Math.min(mCutOffPage + 1, mCurrentPageSequence.size() + 1);
-        }
-
-        public void setCutOffPage(int cutOffPage) {
-            if (cutOffPage < 0) {
-                cutOffPage = Integer.MAX_VALUE;
-            }
-            mCutOffPage = cutOffPage;
-        }
-
-        public int getCutOffPage() {
-            return mCutOffPage;
-        }
-    }
 
     public static class MyDialogFragment extends DialogFragment {
         public static MyDialogFragment newInstance() {
@@ -284,7 +233,7 @@ public class ShowQuizActivity extends AppCompatActivity implements
                     .setPositiveButton(R.string.submit_confirm_button, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-//                            startActivity(new Intent(getActivity(), ResultActivity.class));
+                            startActivity(new Intent(getActivity(), ResultActivity.class));
 
                         }
                     })

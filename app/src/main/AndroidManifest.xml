@@ -22,6 +22,7 @@
             android:label="@string/title_activity_show_subject" />
         <activity android:name=".activities.ShowChapterActivity" />
         <activity android:name=".activities.ShowQuizActivity"></activity>
+        <activity android:name=".activities.ResultActivity"/>
     </application>
 
 </manifest>

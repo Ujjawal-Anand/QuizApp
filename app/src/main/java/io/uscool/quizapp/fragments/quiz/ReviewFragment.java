@@ -37,13 +37,10 @@ public class ReviewFragment extends ListFragment implements ModelCallbacks {
 
     public ReviewFragment() {}
 
-    public ReviewFragment newInstance() {
-        ReviewFragment fragment = new ReviewFragment();
-        return fragment;
-    }
+
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
@@ -51,13 +48,15 @@ public class ReviewFragment extends ListFragment implements ModelCallbacks {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_quiz_review, container, false);
 
-        TextView titleView = (TextView) rootView.findViewById(R.id.title);
+        TextView titleView = (TextView) rootView.findViewById(android.R.id.title);
         titleView.setText("Review");
         titleView.setTextColor(getResources().getColor(R.color.review_title));
 
         ListView listView = (ListView) rootView.findViewById(android.R.id.list);
         mReviewAdapter = new ReviewAdapter(mReviewList, getContext());
-        return super.onCreateView(inflater, container, savedInstanceState);
+        setListAdapter(mReviewAdapter);
+        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        return rootView;
     }
 
     @Override

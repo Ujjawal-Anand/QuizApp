@@ -14,14 +14,14 @@ public class QuizModel extends AbstractQuizWizardModel {
     @Override
     protected QuizPageList onNewRootPageList() {
         return new QuizPageList(
-                new SingleCorrectChoiceQuiz(this, "Which of the following statement is true?")
+                new SingleFixedChoicePage(this, "Which of the following statement is true?")
                         .setChoices("HF is less polar than HBr", "absolutely pure water doesn't contain any ions",
                                 "Chemical bond formation take place when forces of attraction overcome the force of repulsion",
                                 "in covalency transference of electron takes place")
                         .setChoiceMatchPosition(1)
                         .setRequired(false),
 
-                new SingleCorrectChoiceQuiz(this, "In the anion HCOO the two carbon-oxygen bonds are found to be of equal length. What is the reason for it?")
+                new SingleFixedChoicePage(this, "In the anion HCOO the two carbon-oxygen bonds are found to be of equal length. What is the reason for it?")
                         .setChoices("The C=O bond is weaker than the C-O bond",
                                 "The anion HCOO has two resonating structures",
                                 "The anion is obtained by removal of a protoon from the acid molecule",
@@ -29,7 +29,7 @@ public class QuizModel extends AbstractQuizWizardModel {
                         .setChoiceMatchPosition(1)
                         .setRequired(false),
 
-                new SingleCorrectChoiceQuiz(this, "Lattice energy of an ionic compounds depends upon?")
+                new SingleFixedChoicePage(this, "Lattice energy of an ionic compounds depends upon?")
                         .setChoices("Change on the ion only",
                                 "Size of the ion only",
                                 "Packing of ions only",
@@ -37,7 +37,7 @@ public class QuizModel extends AbstractQuizWizardModel {
                         .setChoiceMatchPosition(1)
                         .setRequired(false),
 
-                new SingleCorrectChoiceQuiz(this, "The number and type of bonds between two carbon atoms in calcium carbide are")
+                new SingleFixedChoicePage(this, "The number and type of bonds between two carbon atoms in calcium carbide are")
                         .setChoices("One sigma, one pi",
                                 "One sigma, two pi",
                                 "Two sigma, one pi",
@@ -46,18 +46,18 @@ public class QuizModel extends AbstractQuizWizardModel {
                         .setRequired(false),
 
 
-                new SingleCorrectChoiceQuiz(this, "Question One")
+                new SingleFixedChoicePage(this, "Question One")
                         .setChoices("A", "B")
                         .setChoiceMatchPosition(1)
-                        .setRequired(true),
+                        .setRequired(false),
 
-                new SingleCorrectChoiceQuiz(this, "Question Two")
+                new SingleFixedChoicePage(this, "Question Two")
                         .setChoices("A", "B", "C",
                                 "D", "E", "F")
                         .setChoiceMatchPosition(1)
-                        .setRequired(true),
+                        .setRequired(false),
 
-                new SingleCorrectChoiceQuiz(this, "Question Three")
+                new SingleFixedChoicePage(this, "Question Three")
                         .setChoices("A", "B", "C")
                         .setChoiceMatchPosition(1)
                         .setRequired(false)

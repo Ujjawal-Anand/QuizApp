@@ -11,25 +11,28 @@ import java.util.List;
  */
 
 public abstract class AbstractQuizWizardModel implements ModelCallbacks {
-    private Context mContext;
-    private List<ModelCallbacks> mListeners = new ArrayList<>();
+    protected Context mContext;
+
+    private List<ModelCallbacks> mListeners = new ArrayList<ModelCallbacks>();
     private QuizPageList mRootPageList;
 
     public AbstractQuizWizardModel(Context context) {
-        this.mContext = context;
-        this.mRootPageList = onNewRootPageList();
+        mContext = context;
+        mRootPageList = onNewRootPageList();
     }
+
     /**
-     * Override this to create new Quiz Wizard Model
-     * */
+     * Override this to define a new wizard model.
+     */
     protected abstract QuizPageList onNewRootPageList();
 
     @Override
     public void onPageDataChanged(QuizPage page) {
-        for(int i=0; i<mRootPageList.size(); i++) {
+        // can't use for each because of concurrent modification (review fragment
+        // can get added or removed and will register itself as a listener)
+        for (int i = 0; i < mListeners.size(); i++) {
             mListeners.get(i).onPageDataChanged(page);
         }
-
     }
 
     @Override
@@ -42,12 +45,12 @@ public abstract class AbstractQuizWizardModel implements ModelCallbacks {
     }
 
     public QuizPage findByKey(String key) {
-        return mRootPageList.findBYKey(key);
+        return mRootPageList.findByKey(key);
     }
 
     public void load(Bundle savedValues) {
-        for(String key:savedValues.keySet()) {
-            mRootPageList.findBYKey(key).resetData(savedValues.getBundle(key));
+        for (String key : savedValues.keySet()) {
+            mRootPageList.findByKey(key).resetData(savedValues.getBundle(key));
         }
     }
 
@@ -57,21 +60,23 @@ public abstract class AbstractQuizWizardModel implements ModelCallbacks {
 
     public Bundle save() {
         Bundle bundle = new Bundle();
-        for(QuizPage page : getCurrentPageSequence()) {
+        for (QuizPage page : getCurrentPageSequence()) {
             bundle.putBundle(page.getKey(), page.getData());
         }
-
         return bundle;
     }
 
+    /**
+     * Gets the current list of wizard steps, flattening nested (dependent) pages based on the
+     * user's choices.
+     */
     public List<QuizPage> getCurrentPageSequence() {
-        ArrayList<QuizPage> flattened = new ArrayList<>();
+        ArrayList<QuizPage> flattened = new ArrayList<QuizPage>();
         mRootPageList.flattenCurrentPageSequence(flattened);
         return flattened;
     }
 
     public void unregisterListener(ModelCallbacks listener) {
         mListeners.remove(listener);
-    }
-
+    } 
 }

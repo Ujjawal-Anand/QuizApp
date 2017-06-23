@@ -46,8 +46,8 @@ public abstract class QuizPage implements QuizPageTreeNode {
     }
 
     @Override
-    public QuizPage findBYKey(String key) {
-        return (getKey().equals(getKey())) ? this : null;
+    public QuizPage findByKey(String key) {
+        return (getKey().equals(key)) ? this : null;
     }
 
     @Override

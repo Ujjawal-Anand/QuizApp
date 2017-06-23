@@ -18,9 +18,9 @@ public class QuizPageList extends ArrayList<QuizPage> implements QuizPageTreeNod
     }
 
     @Override
-    public QuizPage findBYKey(String key) {
+    public QuizPage findByKey(String key) {
         for(QuizPage childPage: this) {
-            QuizPage found = childPage.findBYKey(key);
+            QuizPage found = childPage.findByKey(key);
             if(found != null) {
                 return found;
             }

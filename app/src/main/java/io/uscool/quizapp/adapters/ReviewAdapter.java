@@ -42,6 +42,16 @@ public class ReviewAdapter extends BaseAdapter {
     }
 
     @Override
+    public int getViewTypeCount() {
+        return 1;
+    }
+
+    @Override
+    public boolean areAllItemsEnabled() {
+        return true;
+    }
+
+    @Override
     public long getItemId(int position) {
         return mReviewItemList.get(position).hashCode();
     }

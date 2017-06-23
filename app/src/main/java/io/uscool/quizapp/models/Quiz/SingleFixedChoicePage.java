@@ -6,21 +6,23 @@ import android.text.TextUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import io.uscool.quizapp.fragments.quiz.SingleChoiceFragment;
+
 /**
  * Created by ujjawal on 22/6/17.
  */
 
-public class SingleCorrectChoiceQuiz extends QuizPage {
+public class SingleFixedChoicePage extends QuizPage {
     private ArrayList<String> mChoiceList = new ArrayList<>();
     protected int mRightChoicePosition;
 
-    public SingleCorrectChoiceQuiz(ModelCallbacks callbacks, String questionText) {
+    public SingleFixedChoicePage(ModelCallbacks callbacks, String questionText) {
         super(callbacks, questionText);
     }
 
     @Override
     public Fragment createFragment() {
-        return null;
+        return SingleChoiceFragment.create(getKey());
     }
 
     @Override
@@ -46,17 +48,17 @@ public class SingleCorrectChoiceQuiz extends QuizPage {
         return mRightChoicePosition;
     }
 
-    public SingleCorrectChoiceQuiz setChoices(String... choices) {
+    public SingleFixedChoicePage setChoices(String... choices) {
         mChoiceList.addAll(Arrays.asList(choices));
         return this;
     }
 
-    public SingleCorrectChoiceQuiz setChoiceMatchPosition(int position) {
+    public SingleFixedChoicePage setChoiceMatchPosition(int position) {
         mRightChoicePosition = position;
         return this;
     }
 
-    public SingleCorrectChoiceQuiz setValue(String value){
+    public SingleFixedChoicePage setValue(String value){
         mData.putString(DATA_KEY, value);
         return this;
     }

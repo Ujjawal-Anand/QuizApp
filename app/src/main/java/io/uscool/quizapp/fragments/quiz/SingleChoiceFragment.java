@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +17,7 @@ import java.util.List;
 
 import io.uscool.quizapp.R;
 import io.uscool.quizapp.models.Quiz.QuizPage;
-import io.uscool.quizapp.models.Quiz.SingleCorrectChoiceQuiz;
+import io.uscool.quizapp.models.Quiz.SingleFixedChoicePage;
 
 /**
  * Created by ujjawal on 23/6/17.
@@ -26,44 +25,46 @@ import io.uscool.quizapp.models.Quiz.SingleCorrectChoiceQuiz;
 
 public class SingleChoiceFragment extends ListFragment {
     private static final String ARG_KEY = "key";
-    private QuizFragmentCallbacks mCallback;
-    private List<String> mChoice;
+
+    private QuizFragmentCallbacks mCallbacks;
+    private List<String> mChoices;
     private String mKey;
     private QuizPage mPage;
-    private int mRightChoicePosition;
+    private int mMatchPosition;
 
-    public SingleChoiceFragment() {
-
-    }
-
-    public SingleChoiceFragment newInstance(String key) {
+    public static SingleChoiceFragment create(String key) {
         Bundle args = new Bundle();
         args.putString(ARG_KEY, key);
+
         SingleChoiceFragment fragment = new SingleChoiceFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        Bundle args = getArguments();
-        if(args != null) {
-            mKey = args.getString(ARG_KEY);
-            mPage = mCallback.onGetQuizPage(mKey);
-            SingleCorrectChoiceQuiz fixedChoicePage = (SingleCorrectChoiceQuiz) mPage;
-            mChoice = new ArrayList<>();
-            for(int i=0; i<fixedChoicePage.getOptionCount(); i++) {
-                mChoice.add(fixedChoicePage.getOptionAt(i));
-            }
-            mRightChoicePosition = fixedChoicePage.getRightChoicePosition();
-        }
+    public SingleChoiceFragment() {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Bundle args = getArguments();
+        mKey = args.getString(ARG_KEY);
+        mPage = mCallbacks.onGetQuizPage(mKey);
+
+        SingleFixedChoicePage fixedChoicePage = (SingleFixedChoicePage) mPage;
+        mChoices = new ArrayList<String>();
+        for (int i = 0; i < fixedChoicePage.getOptionCount(); i++) {
+            mChoices.add(fixedChoicePage.getOptionAt(i));
+        }
+        mMatchPosition = fixedChoicePage.getRightChoicePosition();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_quiz_page, container, false);
+
         View headerview = ((LayoutInflater) getActivity().getApplicationContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE))
                 .inflate(R.layout.item_list_header_view, null, false);
@@ -78,7 +79,7 @@ public class SingleChoiceFragment extends ListFragment {
         setListAdapter(new ArrayAdapter<String>(getActivity(),
                 R.layout.item_answer,
                 android.R.id.text1,
-                mChoice));
+                mChoices));
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
         // Pre-select currently selected item.
@@ -86,8 +87,8 @@ public class SingleChoiceFragment extends ListFragment {
             @Override
             public void run() {
                 String selection = mPage.getData().getString(QuizPage.DATA_KEY);
-                for (int i = 0; i < mChoice.size(); i++) {
-                    if (mChoice.get(i).equals(selection)) {
+                for (int i = 0; i < mChoices.size(); i++) {
+                    if (mChoices.get(i).equals(selection)) {
                         listView.setItemChecked(i+1, true); // a simple hack
                         break;
                     }
@@ -99,20 +100,20 @@ public class SingleChoiceFragment extends ListFragment {
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
 
-        if (!(context instanceof QuizFragmentCallbacks)) {
-            throw new ClassCastException("Activity must implement PageFragmentCallbacks");
+        if (!(activity instanceof QuizFragmentCallbacks)) {
+            throw new ClassCastException("Activity must implement QuizFragmentCallbacks");
         }
 
-        mCallback = (QuizFragmentCallbacks) context;
+        mCallbacks = (QuizFragmentCallbacks) activity;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mCallback = null;
+        mCallbacks = null;
     }
 
     @Override
@@ -122,7 +123,7 @@ public class SingleChoiceFragment extends ListFragment {
             mPage.getData().putString(QuizPage.DATA_KEY,
                     getListAdapter().getItem(position).toString());
 
-            if (mRightChoicePosition == position) {
+            if (mMatchPosition == position) {
                 mPage.getData().putBoolean(QuizPage.IS_CORRECT, true);
             } else {
                 mPage.getData().putBoolean(QuizPage.IS_CORRECT, false);
@@ -130,5 +131,6 @@ public class SingleChoiceFragment extends ListFragment {
             mPage.notifyDataChanged();
         }
     }
+
 
 }

@@ -7,6 +7,6 @@ import java.util.ArrayList;
  */
 
 public interface QuizPageTreeNode {
-    QuizPage findBYKey(String key);
+    QuizPage findByKey(String key);
     void flattenCurrentPageSequence(ArrayList<QuizPage> dest);
 }

@@ -17,6 +17,7 @@ import java.util.List;
 
 import io.uscool.quizapp.R;
 import io.uscool.quizapp.activities.ShowChapterActivity;
+import io.uscool.quizapp.activities.ShowQuizActivity;
 import io.uscool.quizapp.adapters.SubjectAdapter;
 import io.uscool.quizapp.database.QuizDatabaseHelper;
 import io.uscool.quizapp.models.Subject;
@@ -102,9 +103,10 @@ public class ShowSubjectFragment extends Fragment {
       subjectAdapter.setOnItemClickListener(new SubjectAdapter.OnItemClickListener() {
           @Override
           public void onClick(View view, int position) {
-              Intent intent = new Intent(mActivity, ShowChapterActivity.class);
-              intent.putExtra("subject", subjectList.get(position));
-              startActivity(intent);
+//              Intent intent = new Intent(mActivity, ShowChapterActivity.class);
+//              intent.putExtra("subject", subjectList.get(position));
+//              startActivity(intent);
+              startActivity(new Intent(mActivity, ShowQuizActivity.class));
 
           }
       });
