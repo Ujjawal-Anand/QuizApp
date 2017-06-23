@@ -9,4 +9,6 @@
     <color name="physics_underline">#FFCCBC</color>
     <color name="chemistry_underline">#64B5F6</color>
 
+    <color name="review_title">#ff0099cc</color>
+
 </resources>

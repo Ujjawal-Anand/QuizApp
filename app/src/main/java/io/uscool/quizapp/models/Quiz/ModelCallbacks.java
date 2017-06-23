@@ -6,4 +6,5 @@ package io.uscool.quizapp.models.Quiz;
 
 public interface ModelCallbacks {
     void onPageDataChanged(QuizPage page);
+    void onPageTreeChanged();
 }
