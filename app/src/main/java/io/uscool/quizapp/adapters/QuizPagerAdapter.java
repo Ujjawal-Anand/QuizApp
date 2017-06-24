@@ -37,6 +37,15 @@ public class QuizPagerAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
+    public CharSequence getPageTitle(int position) {
+        if(position == mCurrentPageSequence.size()) {
+            return "review";
+        }
+        return (position+1)+" ";
+    }
+
+
+    @Override
     public int getItemPosition(Object object) {
         // TODO: be smarter about this
         if (object == mPrimaryItem) {
@@ -58,7 +67,8 @@ public class QuizPagerAdapter extends FragmentStatePagerAdapter {
         if (mCurrentPageSequence == null) {
             return 0;
         }
-        return Math.min(mCutOffPage + 1, mCurrentPageSequence.size() + 1);
+//        return Math.min(mCutOffPage + 1, mCurrentPageSequence.size() + 1);
+        return mCurrentPageSequence.size()+1;
     }
 
     public void setCutOffPage(int cutOffPage) {

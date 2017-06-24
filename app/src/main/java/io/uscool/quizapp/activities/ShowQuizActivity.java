@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.astuetz.PagerSlidingTabStrip;
+
 import java.util.List;
 
 import io.uscool.quizapp.R;
@@ -47,7 +49,7 @@ public class ShowQuizActivity extends AppCompatActivity implements
     private Button mPrevButton;
 
     private List<QuizPage> mCurrentPageSequence;
-    private StepPagerStrip mStepPagerStrip;
+//    private StepPagerStrip mStepPagerStrip;
 
     public Toolbar toolbar;
 
@@ -57,6 +59,9 @@ public class ShowQuizActivity extends AppCompatActivity implements
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+
 
         if (savedInstanceState != null) {
             mWizardModel.load(savedInstanceState.getBundle("model"));
@@ -69,7 +74,7 @@ public class ShowQuizActivity extends AppCompatActivity implements
         mPagerAdapter = new QuizPagerAdapter(mCurrentPageSequence, getSupportFragmentManager());
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mPagerAdapter);
-        mStepPagerStrip = (StepPagerStrip) findViewById(R.id.strip);
+       /* mStepPagerStrip = (StepPagerStrip) findViewById(R.id.strip);
         mStepPagerStrip.setOnPageSelectedListener(new StepPagerStrip.OnPageSelectedListener() {
             @Override
             public void onPageStripSelected(int position) {
@@ -78,16 +83,16 @@ public class ShowQuizActivity extends AppCompatActivity implements
                     mPager.setCurrentItem(position);
                 }
             }
-        });
+        });*/
+
 
         mNextButton = (Button) findViewById(R.id.next_button);
         mPrevButton = (Button) findViewById(R.id.prev_button);
 
-        mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                mStepPagerStrip.setCurrentPage(position);
 
+        mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (mConsumePageSelectedEvent) {
                     mConsumePageSelectedEvent = false;
                     return;
@@ -96,7 +101,21 @@ public class ShowQuizActivity extends AppCompatActivity implements
                 mEditingAfterReview = false;
                 updateBottomBar();
             }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
         });
+
+        // Attach the view pager to the tab strip
+        tabsStrip.setViewPager(mPager);
+
 
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,7 +148,7 @@ public class ShowQuizActivity extends AppCompatActivity implements
     public void onPageTreeChanged() {
 //        mCurrentPageSequence = mWizardModel.getCurrentPageSequence();
         recalculateCutOffPage();
-        mStepPagerStrip.setPageCount(mCurrentPageSequence.size() + 1); // + 1 = review step
+//        mStepPagerStrip.setPageCount(mCurrentPageSequence.size() + 1); // + 1 = review step
         mPagerAdapter.notifyDataSetChanged();
         updateBottomBar();
     }
