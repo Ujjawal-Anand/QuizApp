@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">QuizApp</string>
 
     <string name="message_select_avatar">Choose Your Avatar</string>
@@ -20,9 +20,11 @@
     <string name="action_signout">Sign Out</string>
     <string name="prev">Prev</string>
     <string name="next">Next</string>
-    <string name="finish">Finish</string>
+    <string name="finish">Submit Test</string>
     <string name="review">Review</string>
     <string name="submit_confirm_message">Do you really want to submit your test?</string>
     <string name="submit_confirm_button">Yes</string>
+    <string name="negative_duration">\u2212<xliff:g id="time" example="1:14">%1$s</xliff:g></string>
+
 
 </resources>

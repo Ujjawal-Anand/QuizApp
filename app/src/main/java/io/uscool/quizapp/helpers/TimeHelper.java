@@ -9,13 +9,19 @@ import android.widget.TextView;
  */
 
 public class TimeHelper {
-        private static long MillisecondTime, StartTime, TimeBuff,  UpdateTime = 0L ;
-        private static Handler handler;
+        private static long  StartTime;
+        private static long mPauseTime = 0L;
         private static int Seconds, Minutes, MilliSeconds;
         private static int mAssignedTime;
+        private static Handler mHandler = new Handler();
         private static TextView mTextView;
+        private static long timeInMilliseconds = 0L;
+        private static long timeSwapBuff = 0L;
+        private static long updatedTime = 0L;
+        private static boolean mPause = true;
 
-        private TimerHelper() {
+        private TimeHelper() {
+
         }
 
         public static void setTimer(TextView textView, int assignedTime) {
@@ -29,35 +35,60 @@ public class TimeHelper {
             startTimer();
         }
 
-        private static void startTimer() {
-            handler = new Handler();
-            StartTime = SystemClock.uptimeMillis();
-            handler.postDelayed(runnable, 0);
+        public static void pauseTimer() {
+            mPause = true;
+            mHandler.removeCallbacks(updateTimerThread);
         }
 
-        public static Runnable runnable = new Runnable() {
+        private static void startTimer() {
+            Minutes = 0;
+            Seconds = 0;
+            MilliSeconds = 0;
+            StartTime = SystemClock.uptimeMillis();
+            mPause = false;
+            mHandler.postDelayed(updateTimerThread, 0);
+        }
+
+    public static boolean isPause() {
+        return mPause;
+    }
+
+    public static void restartTimer() {
+        if(isPause()) {
+            timeSwapBuff += timeInMilliseconds;
+            mHandler.postDelayed(updateTimerThread, 0);
+            mPause = false;
+            mPauseTime = 0;
+        }
+    }
+
+    private static Runnable updateTimerThread = new Runnable() {
 
             public void run() {
 
-                MillisecondTime = SystemClock.uptimeMillis() - StartTime;
+                timeInMilliseconds = SystemClock.uptimeMillis() - StartTime;
 
-                UpdateTime = TimeBuff + MillisecondTime;
+                updatedTime = timeSwapBuff + timeInMilliseconds;
 
-                Seconds = (int) (UpdateTime / 1000);
+                Seconds = (int) (updatedTime / 1000);
 
                 Minutes = mAssignedTime-Seconds / 60;
 
                 Seconds = 60-Seconds % 60;
 
-                MilliSeconds = (int) (UpdateTime % 1000);
+                MilliSeconds = (int) (updatedTime % 1000);
 
                 mTextView.setText("" + String.format("%02d", Minutes) + ":"
                         + String.format("%02d", Seconds));
 
-                handler.postDelayed(this, 0);
+                mHandler.postDelayed(this, 0);
+                if(Minutes < 0) {
+                    mHandler.removeCallbacks(this);
+                    mTextView.setText("Exam Over");
+                }
             }
 
         };
 
-    
+
 }

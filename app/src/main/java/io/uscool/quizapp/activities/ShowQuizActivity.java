@@ -14,8 +14,9 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
 
@@ -25,11 +26,12 @@ import io.uscool.quizapp.R;
 import io.uscool.quizapp.adapters.QuizPagerAdapter;
 import io.uscool.quizapp.fragments.quiz.QuizFragmentCallbacks;
 import io.uscool.quizapp.fragments.quiz.ReviewFragment;
+import io.uscool.quizapp.helpers.TimeHelper;
 import io.uscool.quizapp.models.Quiz.AbstractQuizWizardModel;
 import io.uscool.quizapp.models.Quiz.ModelCallbacks;
 import io.uscool.quizapp.models.Quiz.QuizModel;
 import io.uscool.quizapp.models.Quiz.QuizPage;
-import io.uscool.quizapp.utils.StepPagerStrip;
+import io.uscool.quizapp.utils.BaseChronometer;
 
 public class ShowQuizActivity extends AppCompatActivity implements
         QuizFragmentCallbacks,
@@ -47,7 +49,9 @@ public class ShowQuizActivity extends AppCompatActivity implements
 
     private Button mNextButton;
     private Button mPrevButton;
-
+    private Button mSubmitTestBtn;
+//    private BaseChronometer mChronometer;
+    private ImageButton mPauseTestBtn;
     private List<QuizPage> mCurrentPageSequence;
 //    private StepPagerStrip mStepPagerStrip;
 
@@ -59,6 +63,29 @@ public class ShowQuizActivity extends AppCompatActivity implements
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        TextView timerView = (TextView) findViewById(R.id.timer_view);
+        TimeHelper.setTimer(timerView, 1);
+
+        mSubmitTestBtn = (Button) findViewById(R.id.btn_submit);
+        mPauseTestBtn = (ImageButton) findViewById(R.id.pause_icon_image);
+        mPauseTestBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(TimeHelper.isPause()) {
+                    TimeHelper.restartTimer();
+                } else {
+                    TimeHelper.pauseTimer();
+                }
+            }
+        });
+       /* mChronometer = (BaseChronometer) findViewById(R.id.chronometer);
+        mChronometer.setBase(1000*60);
+        mChronometer.setCountDown(true);
+        mChronometer.start();
+
+*/
+
 
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
 
@@ -115,6 +142,18 @@ public class ShowQuizActivity extends AppCompatActivity implements
 
         // Attach the view pager to the tab strip
         tabsStrip.setViewPager(mPager);
+        mSubmitTestBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mPager.getCurrentItem() == mCurrentPageSequence.size()) {
+                    DialogFragment dg = MyDialogFragment.newInstance();
+                    dg.show(getSupportFragmentManager(), "submit_test_dialog");
+                }
+                    else {
+                    mPager.setCurrentItem(mCurrentPageSequence.size());
+                }
+            }
+        });
 
 
         mNextButton.setOnClickListener(new View.OnClickListener() {
@@ -122,7 +161,8 @@ public class ShowQuizActivity extends AppCompatActivity implements
             public void onClick(View view) {
                 if (mPager.getCurrentItem() == mCurrentPageSequence.size()) {
                     DialogFragment dg = MyDialogFragment.newInstance();
-                    dg.show(getSupportFragmentManager(), "place_order_dialog");
+                    dg.show(getSupportFragmentManager(), "submit_test_dialog");
+
                 } else {
                     if (mEditingAfterReview) {
                         mPager.setCurrentItem(mPagerAdapter.getCount() - 1);
