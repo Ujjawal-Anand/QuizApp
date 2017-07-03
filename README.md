@@ -2,9 +2,7 @@
 
 Play Quiz in Android
 
- <img src="screenshots/login.jpg" alt="Review" width="180px" height="320px">
-<img src="screenshots/avatar_selection.jpg" alt="Review" width="180px" height="320px">
-<img src="screenshots/category.jpg" alt="Main" width="180px" height="320px">
+ <img src="screenshots/login.jpg" alt="Review" width="180px" height="320px"> <img src="screenshots/avatar_selection.jpg" alt="Review" width="180px" height="320px"> <img src="screenshots/category.jpg" alt="Main" width="180px" height="320px">
 
 
 <img src="screenshots/main.jpg" alt="Main" width="180px" height="320px">
