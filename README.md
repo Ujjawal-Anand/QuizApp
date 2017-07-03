@@ -7,7 +7,7 @@ A simple Quiz App in Android
 
 <img src="screenshots/main.jpg" alt="Main" width="180px" height="320px"> <img src="screenshots/main.jpg" alt="Main" width="180px" height="320px">
 
-## Task List For Maintainers And Contributors.
+## Task List
 - [x] Create Quiz UI.
 - [x] Create timer.
 - [x] Create QuizSubmit Function.
