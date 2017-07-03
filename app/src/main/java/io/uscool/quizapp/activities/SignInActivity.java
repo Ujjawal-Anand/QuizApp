@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import io.uscool.quizapp.MainActivity;
 import io.uscool.quizapp.R;
 import io.uscool.quizapp.fragments.AvatarPickerDialogFragment;
 import io.uscool.quizapp.fragments.SignInFragment;

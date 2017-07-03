@@ -21,7 +21,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import io.uscool.quizapp.MainActivity;
 import io.uscool.quizapp.R;
 import io.uscool.quizapp.helpers.UserHelper;
 import io.uscool.quizapp.models.Avatars;
